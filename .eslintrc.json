@@ -1,0 +1,41 @@
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:prettier/recommended"
+	],
+	"plugins": ["@typescript-eslint", "prettier", "import"],
+	"settings": {
+		"import/parsers": {
+			"@typescript-eslint/parser": [".ts"]
+		},
+		"import/resolver": {
+			"typescript": {
+				"alwaysTryTypes": true,
+				"project": "./src"
+			}
+		}
+	},
+	"rules": {
+		"import/no-unresolved": "warn",
+		"@typescript-eslint/no-empty-interface": "off",
+		"react/display-name": "off",
+		"prettier/prettier": [
+			"warn",
+			{
+				"trailingComma": "none",
+				"semi": false,
+				"useTabs": true,
+				"tabWidth": 2,
+				"jsxSingleQuote": true,
+				"bracketSameLine": true,
+				"singleQuote": false,
+				"arrowParens": "avoid",
+				"printWidth": 100
+			}
+		]
+	}
+}

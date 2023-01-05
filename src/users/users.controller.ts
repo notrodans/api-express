@@ -19,7 +19,7 @@ export class UserController extends BaseController {
 		next(new HTTPError(401, "Ошибка авторизации", "login"))
 	}
 
-	register(req: Request, res: Response, next: NextFunction) {
+	register(req: Request, res: Response) {
 		this.ok(res, "register")
 	}
 }
