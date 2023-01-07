@@ -5,6 +5,7 @@ import { ExceptionFilter } from "./errors/exception.filter"
 import { ILogger } from "./logger/logger.interface"
 import { inject, injectable } from "inversify"
 import { TYPES } from "./types"
+import { json } from "body-parser"
 import "reflect-metadata"
 
 @injectable()
@@ -15,7 +16,7 @@ export class App {
 
 	constructor(
 		@inject(TYPES.ILogger) private readonly logger: ILogger,
-		@inject(TYPES.UserControoler) private readonly usersController: UserController,
+		@inject(TYPES.UserController) private readonly usersController: UserController,
 		@inject(TYPES.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter
 	) {
 		this.app = express()
@@ -26,15 +27,19 @@ export class App {
 		this.app.use("/users", this.usersController.router)
 	}
 
+	useMiddlewares() {
+		this.app.use(json())
+	}
+
 	useExceptionFilters() {
 		this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter))
 	}
 
 	public async init() {
+		this.useMiddlewares()
 		this.useRoutes()
 		this.useExceptionFilters()
-		this.server = this.app.listen(this.port, () => {
-			this.logger.log(`Сервер запущен на https://localhost:${this.port}`)
-		})
+		this.server = this.app.listen(this.port)
+		this.logger.log(`Сервер запущен на https://localhost:${this.port}`)
 	}
 }

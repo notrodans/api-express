@@ -22,7 +22,7 @@
 	"rules": {
 		"import/no-unresolved": "warn",
 		"@typescript-eslint/no-empty-interface": "off",
-		"react/display-name": "off",
+		"@typescript-eslint/no-explicit-any": "off",
 		"prettier/prettier": [
 			"warn",
 			{

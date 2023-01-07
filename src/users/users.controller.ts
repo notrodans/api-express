@@ -4,22 +4,44 @@ import { HTTPError } from "../errors/http-error.class"
 import { inject, injectable } from "inversify"
 import { TYPES } from "../types"
 import { ILogger } from "../logger/logger.interface"
+import { IUserController } from "./users.interface"
+import { UserLoginDto } from "./dto/user-login.dto"
+import { UserRegisterDto } from "./dto/user-register.dto"
+import { ValidateMiddleware } from "../common/validate.middleware"
+import { UserService } from "./users.service"
 
 @injectable()
-export class UserController extends BaseController {
-	constructor(@inject(TYPES.ILogger) private readonly loggerService: ILogger) {
+export class UserController extends BaseController implements IUserController {
+	constructor(
+		@inject(TYPES.ILogger) private readonly loggerService: ILogger,
+		@inject(TYPES.UserService) private readonly userService: UserService
+	) {
 		super(loggerService)
 		this.bindRoutes([
-			{ path: "/login", func: this.login, method: "post" },
-			{ path: "/register", func: this.register, method: "post" }
+			{
+				path: "/login",
+				func: this.login,
+				method: "post"
+			},
+			{
+				path: "/register",
+				func: this.register,
+				method: "post",
+				middlewares: [new ValidateMiddleware(UserRegisterDto)]
+			}
 		])
 	}
 
-	login(req: Request, res: Response, next: NextFunction) {
+	login({ body }: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction) {
+		console.log(body)
 		next(new HTTPError(401, "Ошибка авторизации", "login"))
 	}
 
-	register(req: Request, res: Response) {
-		this.ok(res, "register")
+	async register({ body }: Request<{}, {}, UserRegisterDto>, res: Response, next: NextFunction) {
+		const result = await this.userService.createUser(body)
+		if (!result) {
+			return next(new HTTPError(422, "Такой пользователь уже существует"))
+		}
+		this.ok(res, { email: result.email })
 	}
 }
