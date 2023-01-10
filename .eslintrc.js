@@ -10,7 +10,9 @@ module.exports = {
 	plugins: ["@typescript-eslint", "prettier", "import"],
 	parserOptions: {
 		tsconfigRootDir: __dirname,
-		project: ["./tsconfig.json"]
+		project: ["./tsconfig.json"],
+		ecmaVersion: 12,
+		sourceType: "module"
 	},
 	settings: {
 		"import/parsers": {
@@ -42,5 +44,6 @@ module.exports = {
 				printWidth: 100
 			}
 		]
-	}
+	},
+	ignorePatterns: ["types/**/*.ts"]
 }

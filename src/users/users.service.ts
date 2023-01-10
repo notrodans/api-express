@@ -7,6 +7,8 @@ import { UserLoginDto } from "./dto/user-login.dto"
 import { UserEntity } from "./user.entity"
 import { IUsersRepository } from "./users.repository.interface"
 import { IUserService } from "./users.service.interface"
+import { decode, JwtPayload } from "jsonwebtoken"
+import { HTTPError } from "../errors/http-error.class"
 
 @injectable()
 export class UserService implements IUserService {
@@ -26,12 +28,16 @@ export class UserService implements IUserService {
 		return this.usersRepository.create(newUser)
 	}
 
-	async validateUser({ email, password }: UserLoginDto) {
+	async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
 		const existedUser = await this.usersRepository.find(email)
 		if (!existedUser) {
 			return false
 		}
 		const newUser = new UserEntity(existedUser?.email, existedUser?.name, existedUser?.password)
 		return await newUser.comparePassword(password)
+	}
+
+	async findUser(email: string) {
+		return await this.usersRepository.find(email)
 	}
 }
