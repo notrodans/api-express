@@ -1,0 +1,31 @@
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:prettier/recommended"
+	],
+	"plugins": ["@typescript-eslint", "prettier"],
+	"rules": {
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/ban-types": "off",
+		"prettier/prettier": [
+			"error",
+			{
+				"trailingComma": "none",
+				"semi": true,
+				"useTabs": true,
+				"tabWidth": 2,
+				"jsxSingleQuote": true,
+				"bracketSameLine": true,
+				"singleQuote": false,
+				"arrowParens": "avoid",
+				"printWidth": 100
+			}
+		]
+	},
+	"ignorePatterns": ["types/**/*.ts"]
+}

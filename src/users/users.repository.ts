@@ -1,9 +1,9 @@
-import { UserModel } from "@prisma/client"
-import { PrismaService } from "../database/prisma.service"
-import { TYPES } from "../types"
-import { inject, injectable } from "inversify"
-import { UserEntity } from "./user.entity"
-import { IUsersRepository } from "./users.repository.interface"
+import { UserModel } from "@prisma/client";
+import { PrismaService } from "../database/prisma.service";
+import { TYPES } from "../types";
+import { inject, injectable } from "inversify";
+import { UserEntity } from "./user.entity";
+import { IUsersRepository } from "./users.repository.interface";
 
 @injectable()
 export class UsersRepository implements IUsersRepository {
@@ -16,7 +16,7 @@ export class UsersRepository implements IUsersRepository {
 				name,
 				password
 			}
-		})
+		});
 	}
 
 	async find(email: string): Promise<UserModel | null> {
@@ -24,6 +24,6 @@ export class UsersRepository implements IUsersRepository {
 			where: {
 				email
 			}
-		})
+		});
 	}
 }

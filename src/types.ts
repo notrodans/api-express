@@ -7,4 +7,4 @@ export const TYPES = {
 	ExceptionFilter: Symbol.for("ExceptionFilter"),
 	PrismaService: Symbol.for("PrismaService"),
 	UsersRepository: Symbol.for("UsersRepository")
-}
+};

@@ -1,11 +1,11 @@
-import { NextFunction, Request, Response, Router } from "express"
-import { IMiddleware } from "./middleware.interface"
+import { NextFunction, Request, Response, Router } from "express";
+import { IMiddleware } from "./middleware.interface";
 
 export interface IControllerRoute {
-	path: string
-	func: (req: Request, res: Response, next: NextFunction) => void | Promise<void>
-	method: keyof Pick<Router, "get" | "post" | "delete" | "patch" | "put">
-	middlewares?: IMiddleware[]
+	path: string;
+	func: (req: Request, res: Response, next: NextFunction) => void | Promise<void>;
+	method: keyof Pick<Router, "get" | "post" | "delete" | "patch" | "put">;
+	middlewares?: IMiddleware[];
 }
 
-export type ExpressReturnType = Response<any, Record<string, any>>
+export type ExpressReturnType = Response<any, Record<string, any>>;
